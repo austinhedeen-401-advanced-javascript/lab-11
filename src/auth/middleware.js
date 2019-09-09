@@ -1,7 +1,17 @@
 'use strict';
+/**
+ * @module
+ */
 
 const User = require('./users-model.js');
 
+/**
+ * A middleware function that authenticates a request using the request header
+ * @param request
+ * @param response
+ * @param next
+ * @returns {Promise|void}
+ */
 module.exports = (request, response, next) => {
 
   try {
@@ -16,6 +26,12 @@ module.exports = (request, response, next) => {
     return _authError();
   }
 
+  /**
+   * Authenticates the request using basic auth
+   * @param authString
+   * @returns {Promise}
+   * @private
+   */
   function _authBasic(authString) {
     const decodedString = Buffer.from(authString, 'base64').toString();
     const [username, password] = decodedString.split(':');
@@ -24,6 +40,11 @@ module.exports = (request, response, next) => {
       .then(user => _authenticate(user));
   }
 
+  /**
+   * Completes the authentication process by placing a token in the request
+   * @param user
+   * @private
+   */
   function _authenticate(user) {
     if (user) {
       request.user = user;
@@ -34,6 +55,10 @@ module.exports = (request, response, next) => {
     }
   }
 
+  /**
+   * If the authentication process hits an error, notify the client
+   * @private
+   */
   function _authError() {
     next({ status: 401, statusMessage: 'Unauthorized', message: 'Invalid User ID/Password' });
   }
