@@ -3,8 +3,10 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/books', handleGetAll);
-router.get('/books/:id', handleGetOne);
+const auth = require('../auth/middleware.js');
+
+router.get('/books', auth, handleGetAll);
+router.get('/books/:id', auth, handleGetOne);
 
 // Route Handlers
 function handleGetAll(req, res, next) {
