@@ -41,7 +41,7 @@ users.methods.generateToken = function () {
     capabilities: [],
   };
 
-  return jsonWebToken.sign(tokenData, process.env.SECRET || 'E7#kSA6px&5bnF9$s!H@JZ^0TXTeXXOv67NXNM&IQyOjyJWX9W*6z0U6V01vARZWe6TMfZ0^#ECPZOcSdc*G4a8obStlV&#4tsy');
+  return jsonWebToken.sign(tokenData, process.env.SECRET || 'changeit');
 };
 
 module.exports = mongoose.model('users', users);
